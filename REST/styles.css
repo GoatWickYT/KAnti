@@ -161,13 +161,15 @@ button:is(:focus, :focus-visible, :active) {
 /*#endregion choice*/
 
 /*#region list*/
-.list {
+.list>div, .list {
     display: flex;
-    align-self: center;
     align-items: center;
     justify-content: center;
     flex-direction: column;
     width: 700px;
+}
+
+.list{
     border: 2px solid aqua;
     border-radius: 20px 0px;
 }
@@ -175,17 +177,20 @@ button:is(:focus, :focus-visible, :active) {
 .datas{
     display: flex;
     flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 .datas>select {
     font-size: 30px;
     padding: 10px;
     background-color: transparent;
+    width: 100%;
     color: white;
     border: 2px solid rgba(0, 255, 255, 0.75);
     border-radius: 10px;
     outline: none;
-    appearance: none; /* Remove default dropdown arrow for customization */
+    appearance: none;
     background-image: linear-gradient(to right, rgba(0, 83, 83, 0.5), aqua);
     background-clip: padding-box;
     transition: 0.3s ease-in-out;
@@ -203,7 +208,7 @@ button:is(:focus, :focus-visible, :active) {
     box-shadow: 0 0 20px rgba(0, 255, 255, 0.8), 0 0 40px rgba(0, 255, 255, 0.6);
 }
 
-.buttons>button{
+.list>button, .buttons>button{
     --btn-bg-1: var(--color-second);
     --btn-bg-2: var(--color);
     background-color: linear-gradient(325deg,var(--btn-bg-2) 00%,var(--btn-bg-1) 55%,var(--btn-bg-2) 90%);
@@ -225,3 +230,38 @@ button:is(:focus, :focus-visible, :active) {
 }
 
 /*#endregion list*/
+
+#editCourse{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 700px;
+    border: 2px solid aqua;
+    border-radius: 20px 0px;
+}
+
+.cancel{
+    --btn-bg-1: rgba(255, 0, 0, 0.5);
+    --btn-bg-2: rgba(255, 0, 0, 0.9);
+    box-shadow:
+        0px 0px 20px rgba(71, 0, 0, 0.5),
+        0px 5px 5px -1px rgba(73, 0, 0, 0.25),
+        inset 4px 4px 8px rgba(175, 0, 0, 0.5),
+        inset -4px -4px 8px rgba(35, 0, 0, 0.35);
+}
+
+.save, .addNew {
+    color:white;
+    --btn-bg-1: rgba(0, 255, 0, 0.5) !important;
+    --btn-bg-2: rgba(0, 255, 0, 0.9) !important;
+    box-shadow:
+        0px 0px 20px rgba(71, 255, 0, 0.5),
+        0px 5px 5px -1px rgba(73, 255, 0, 0.25),
+        inset 4px 4px 8px rgba(175, 255, 0, 0.5),
+        inset -4px -4px 8px rgba(35, 255, 0, 0.35);
+}
+
+.addNew{
+    width: 60%;
+}

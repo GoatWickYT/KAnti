@@ -27,26 +27,68 @@
     </div>
 
     <div id="courses" class="list hide">
+        <button onclick="back()">back</button>
         <h2>Courses</h2>
-        <h3>Choose which data you want to change</h3>
-        <div class="datas">
-            <select id="courseDropdown"></select>
-            <div class="buttons">
-                <button class="edit">edit</button>
-                <button class="delete">delete</button>
+        <div id="chooseCourses">
+            <h3>Choose which data you want to change</h3>
+            <div class="datas">
+                <select id="coursesDropdown"></select>
+                <div class="buttons">
+                    <button class="edit" onclick="editCourse()">edit</button>
+                    <button class="delete" onclick="deleteCourse()">delete</button>
+                </div>
             </div>
+            <button class="addNew" onclick="newCourse()">Add new course</button>
+        </div>
+        <div id="addCourse" class="hide">
+            <label for="newCourseName"></label>
+            <input type="text" id="newCourseName" placeholder="Course name">
+            <label for="studentsInCourse">Manage students for this course:</label>
+            <div id="studentsInNewCourse">
+                
+            </div>
+            <button class="save" onclick="saveNewCourse()">Save</button>
+        </div>
+        <div id="editCourse" class="editCourse hide">
+            <h3>Edit course</h3>
+            <label for="courseName">Course Name</label>
+            <input type="text" id="courseName" placeholder="Course name">
+            <label for="studentsInCourse">Manage students for this course:</label>
+            <div id="studentsInCourse">
+                
+            </div>
+            <button class="save" onclick="saveCourse()">Save</button>
+            <button class="cancel" onclick="backToCourses()">Cancel</button>
         </div>
     </div>
-
     <div id="students" class="list hide">
+        <button onclick="back()">back</button>
         <h2>Students</h2>
-        <h3>Choose which data you want to change</h3>
-        <div class="datas">
-            <select id="studentDropdown"></select>
-            <div class="buttons">
-                <button class="edit">edit</button>
-                <button class="delete">delete</button>
+        <div id="chooseStudent">
+            <h3>Choose which data you want to change</h3>
+            <div class="datas">
+                <select id="studentDropdown"></select>
+                <div class="buttons">
+                    <button class="edit" onclick="editStudent()">edit</button>
+                    <button class="delete" onclick="deleteStudent()">delete</button>
+                </div>
             </div>
+            <button class="addNew" onclick="newStudent()">Add new student</button>
+        </div>
+        <div id="addStudent" class="hide">
+            <label for="newStudentName"></label>
+            <input type="text" id="newStudentName" placeholder="Student name">
+            <button class="save" onclick="saveNewStudent()">Save</button>
+        </div>
+        <div id="editStudent" class="editStudent hide">
+            <h3>Edit student</h3>
+            <label for="studentName">Student Name</label>
+            <input type="text" id="studentName" placeholder="Student name">
+            <label for="coursesForStudent">Manage courses for this student:</label>
+            <div id="coursesForStudent">
+            </div>
+            <button class="save" onclick="saveStudent()">Save</button>
+            <button class="cancel" onclick="backToStudents()">Cancel</button>
         </div>
     </div>
 </body>
