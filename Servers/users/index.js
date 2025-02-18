@@ -1,6 +1,4 @@
-const { error } = require('console');
 const express = require('express');
-const { copyFileSync } = require('fs');
 
 const port = 3000;
 
@@ -23,26 +21,36 @@ app.get('/users', (req, res, next) => {
 
 app.get('/users/:id', (req, res, next) => {
     const id = req.params.id;
-    console.log(users[id-1]);
-    res.send(users[id-1]);
+    console.log(users[id]);
+    res.send(users[id]);
 })
 
 app.post('/users', (req, res, next) => {
     const {firstName, lastName} = req.body;
+    if (!firstName || lastName === undefined){
+        console.log({'message':'fill all fields'})
+        return res.send({'message':'fill all fields'})
+    }
     users.push({firstName, lastName})
-    res.send(`new student added ${firstName} ${lastName}`);
     console.log(`new student added ${firstName} ${lastName}`);    
+    res.status(201).json({firstName, lastName});
 })
 
 app.put('/users/:id', (req, res, next) => {
     const id = req.params.id;
     try{
-        if (users[id-1] === undefined){
+        if (!(id > 0 && id < users.length)){
             console.log({"message" : "User not found"});
             res.send({"message" : "User not found"})
             return;
         }
-        users[id-1] = req.body;
+        if (req.body.firstName === undefined || req.body.lastName === undefined){
+            console.log({'message':'fill all fields'})
+            res.send({'message':'fill all fields'})
+            return;
+        }
+        users[id] = req.body;
+
         console.log(users);
         res.send(users);
     }
@@ -54,12 +62,12 @@ app.put('/users/:id', (req, res, next) => {
 app.patch('/users/:id', (req, res, next) => {
     const id = req.params.id;
     try{
-        if (users[id-1] === undefined){
+        if (users[id] === undefined){
             console.log({"message" : "User not found"});
             res.send({"message" : "User not found"})
             return;
         }
-        users[id-1] = req.body;
+        users[id] = req.body;
         console.log(users);
         res.send(users);
     }
@@ -71,12 +79,12 @@ app.patch('/users/:id', (req, res, next) => {
 app.delete('/users/:id', (req, res, next) => {
     const id = req.params.id
     try{
-        if (users[id-1] === undefined){
+        if (users[id] === undefined){
             console.log({"message" : "User not found"});
             res.send({"message" : "User not found"})
             return;
         }
-        users.splice(id-1);
+        users.splice(id);
         console.log({"message" : "Delete successful"});
         res.send({"message" : "Delete successful"});
     }
