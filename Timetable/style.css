@@ -1,0 +1,17 @@
+table{
+    border: 3px double black;
+    border-collapse: collapse;
+}
+th, td, tr {
+    padding: 30px;
+    border-top: 2px solid black;
+    border-bottom: 2px solid black;
+    text-align: center;
+}
+tr>th:first-child{
+    border-right: 2px solid black;
+}
+th {
+    font-variant-caps: small-caps;
+    font-size: 20px;
+}
