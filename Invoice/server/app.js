@@ -60,14 +60,8 @@ app.post('/invoices', (req, res) => {
 });
 app.put('/invoices/:id', (req, res) => {
   const id = req.params.id;
-  const {payDate} = req.body;
-  db.changeInvoice(id, payDate);
-  res.json({ message: 'Invoice updated' });
-});
-app.delete('/invoices/:id', (req, res) => {
-  const id = req.params.id;
-  db.deleteInvoice(id);
-  res.json({ message: 'Invoice deleted' });
+  db.stornoInvoice(id);
+  res.json({ message: 'Invoice stornoed' });
 });
 // #endregion
 

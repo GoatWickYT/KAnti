@@ -47,6 +47,7 @@ export const setupDB = () => {
         dueDate TEXT NOT NULL,
         total REAL NOT NULL,
         vat REAL NOT NULL,
+        storno BINARY NOT NULL,
         FOREIGN KEY (vendorId) REFERENCES vendor(id) ON DELETE CASCADE,
         FOREIGN KEY (customerId) REFERENCES customer(id) ON DELETE CASCADE
     );`).run();
@@ -142,13 +143,10 @@ export const postInvoice = (vendorId, customerId, invoiceNumber, date, dueDate, 
         VALUES (?, ?, ?, ?, ?, ?, ?, ?)
     `).run(vendorId, customerId, invoiceNumber, date, dueDate, total, vat, payDate);
 }
-export const changeInvoice = (id, payDate) => {
+export const stornoInvoice = (id) => {
     return db.prepare(`
         UPDATE invoice
-        SET payDate = ?
+        storno = 1 
         WHERE id = ?
-    `).run(payDate, id);
-}
-export const deleteInvoice = (id) => {
-    return db.prepare("DELETE FROM invoice WHERE id = ?").run(id);
+    `).run(id);
 }

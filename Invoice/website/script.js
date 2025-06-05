@@ -3,36 +3,8 @@ let customers = [];
 let vendors = [];
 
 function displayInvoice(invoice) {
-    const FIVE_YEARS_MS = 5 * 365 * 24 * 60 * 60 * 1000;
-    const invoiceDate = new Date(invoice.date);
-    const now = new Date();
-    const isOlderThanFiveYears = now - invoiceDate > FIVE_YEARS_MS;
-
     let customerName = (customers.find(c => c.id == invoice.customerId) || {}).name || 'Unknown Customer';
     let vendorName = (vendors.find(v => v.id == invoice.vendorId) || {}).name || 'Unknown Customer';
-
-    let deleteButton = '';
-    if (isOlderThanFiveYears) {
-        deleteButton = `<button class="delete-button" onclick="deleteInvoice(${invoice.id})">Delete</button>`;
-    }
-
-    if (!invoice.payDate) {
-        return `
-        <div class="content-box">
-            <div class="content-header">
-                <strong>Customer:</strong>${customerName} <br> <strong>Vendor:</strong>${vendorName}<br>
-                <div>${invoice.invoiceNumber}</div>
-            </div>
-            <ul>
-                <li><strong>Invoice Date:</strong> ${invoice.date}</li>
-                <li><strong>Due Date:</strong> ${invoice.dueDate}</li>
-                <li><strong>Amount:</strong> ${invoice.total} (VAT:${invoice.vat}%)</li>
-            </ul>
-            <button class="pay-button" onclick="payInvoice(${invoice.id})">Pay</button>
-            ${deleteButton}
-        </div>
-        `;
-    }
     return `
         <div class="content-box">
             <div class="content-header">
@@ -45,7 +17,8 @@ function displayInvoice(invoice) {
                 <li><strong>Amount:</strong> ${invoice.total} (VAT:${invoice.vat}%)</li>
                 <li><strong>Pay Date:</strong> ${invoice.payDate}</li>
             </ul>
-            ${deleteButton}
+            <button class="delete-button" onclick="stornoInvoice(${invoice.id})">Delete</button>
+            <button class="edit-button" onclick="editInvoice(${invoice.id})">Edit</button>
         </div>
         `;
 }
@@ -150,27 +123,20 @@ async function loadData() {
         .catch(error => console.error('Error loading vendors:', error));
 }
 
-async function payInvoice(id) {
-    const now = new Date();
+async function stornoInvoice(id) {
     await fetch('http://localhost:3000/invoices/' + id, {
-        method: 'PUT',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ payDate: now.toISOString().slice(0, 10)})
+        method: 'PUT'
     }).then(async response => {
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }
-        return response.json();
-    }).then(async () => {
         await loadData();
         fillContent(invoices);
     }).catch(error => {
-        console.error('Error paying invoice:', error);
-        alert('Error paying invoice: ' + error.message);
-    }
-);}
+        console.error('Error stornoing invoice:', error);
+        alert('Error stornoing invoice: ' + error.message);
+    });
+}
 
 function deleteVendor(id) {
     fetch('http://localhost:3000/vendors/' + id, {
@@ -202,17 +168,6 @@ function deleteCustomer(id) {
     });
 }
 
-function deleteInvoice(id) {
-    fetch('http://localhost:3000/invoices/' + id, {
-        method: 'DELETE'
-    }).then(async response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        await loadData();
-        fillContent(invoices);
-    }).catch(error => {
-        console.error('Error deleting invoice:', error);
-        alert('Error deleting invoice: ' + error.message);
-    });
+function editInvoice(id) {
+    window.location.href = 'invoice.html?id=' + id;
 }
