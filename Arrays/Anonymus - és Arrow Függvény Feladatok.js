@@ -67,4 +67,6 @@ const increase = (number) => number++
 console.log(number)
 console.log(increase(number))
 console.log(number)
+
+a number++ lefutás után növeli az értéket 1-el, helyes akkor lenne ha ++number lenne vagy number += 1
 */
